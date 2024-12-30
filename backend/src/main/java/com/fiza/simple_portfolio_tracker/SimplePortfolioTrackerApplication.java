@@ -11,11 +11,11 @@ public class SimplePortfolioTrackerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SimplePortfolioTrackerApplication.class, args);
 	}
-	
+
 	@Bean
 	public ModelMapper modelMapper() {
 		return new ModelMapper();
-		
+
 	}
 
 }
