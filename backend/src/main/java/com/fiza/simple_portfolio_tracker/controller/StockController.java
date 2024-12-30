@@ -30,14 +30,14 @@ public class StockController {
 	@Autowired
 	private StockService stockService;
 
-	@PostMapping("/")
+	@PostMapping()
 	public ResponseEntity<StockDTO> createStock(@Valid @RequestBody StockDTO stockDTO) {
 		StockDTO createdstockStockDTO = this.stockService.addStock(stockDTO);
 		return new ResponseEntity<StockDTO>(createdstockStockDTO, HttpStatus.CREATED);
 
 	}
 
-	@GetMapping("/")
+	@GetMapping()
 	public ResponseEntity<List<StockDTO>> getAllStocks() {
 		List<StockDTO> allStocks = this.stockService.getAllStocks();
 		return new ResponseEntity<List<StockDTO>>(allStocks, HttpStatus.OK);

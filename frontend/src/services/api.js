@@ -1,10 +1,14 @@
 import axios from "axios";
-import { API_BASE_URL, API_KEY } from "../utils/constants";
+import {
+  REALTIME_STOCK_PRICE_API_BASE_URL,
+  API_KEY,
+  API_BASE_URL,
+} from "../utils/constants";
 
 export const fetchStockDetails = async (symbol) => {
   try {
     console.log("API", API_KEY);
-    const response = await axios.get(API_BASE_URL, {
+    const response = await axios.get(REALTIME_STOCK_PRICE_API_BASE_URL, {
       params: {
         function: "GLOBAL_QUOTE",
         symbol,
@@ -12,7 +16,7 @@ export const fetchStockDetails = async (symbol) => {
       },
     });
     console.log("response", response);
-    return response.data;
+    return response.data["Global Quote"];
   } catch (error) {
     console.error("Error fetching stock details:", error);
     throw error;

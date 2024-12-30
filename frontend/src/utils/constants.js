@@ -41,5 +41,7 @@ export const STOCKS = [
   },
 ];
 
-export const API_BASE_URL = "https://www.alphavantage.co/query";
+export const REALTIME_STOCK_PRICE_API_BASE_URL =
+  "https://www.alphavantage.co/query";
 export const API_KEY = process.env.REACT_APP_API_KEY;
+export const API_BASE_URL = process.env.REACT_APP_BASE_URL;
