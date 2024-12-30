@@ -1,4 +1,3 @@
-import { Button } from "@mui/material";
 import useFetchStock from "./hooks/useFetchStock";
 function App() {
   const { stockData, loading, error } = useFetchStock("IBM");
