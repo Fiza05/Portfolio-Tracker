@@ -1,7 +1,6 @@
 import React, { useMemo } from "react";
 import { Container, CssBaseline } from "@mui/material";
 import useStockManager from "./hooks/useStockManager";
-import StockManager from "./components/StockManager";
 import Dashboard from "./components/Dashboard";
 import LoadingSpinner from "./components/LoadingSpinner";
 import ErrorDisplay from "./components/ErrorDisplay";

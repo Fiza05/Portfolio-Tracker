@@ -46,8 +46,8 @@ const Dashboard = ({ stocks, addStock, editStock, removeStock, symbols }) => {
 
   return (
     <Box mt={4}>
-      <Typography variant="h4" gutterBottom>
-        Investment Dashboard
+      <Typography variant="h3" align="center" gutterBottom>
+        Portfolio Tracker
       </Typography>
 
       {loading && <CircularProgress />}
@@ -60,10 +60,7 @@ const Dashboard = ({ stocks, addStock, editStock, removeStock, symbols }) => {
         {stocks.map((stock, index) => (
           <Grid
             item
-            xs={12} // Full width on extra small screens
-            sm={6} // Half width on small screens
-            md={4} // Third width on medium screens
-            lg={3} // Quarter width on large screens
+            size={{ xs: 12, sm: 6, md: 4, lg: 4 }}
             key={stock.id || `${stock.ticker}-${index}`}
           >
             <StockCard
@@ -74,10 +71,12 @@ const Dashboard = ({ stocks, addStock, editStock, removeStock, symbols }) => {
             />
           </Grid>
         ))}
+        <Grid item size={{ xs: 12, sm: 6, md: 4, lg: 4 }}>
+          <Button variant="outlined" sx={{ margin: 3 }} onClick={handleOpen}>
+            Add New Stock
+          </Button>
+        </Grid>
       </Grid>
-      <Button variant="outlined" sx={{ marginTop: 3 }} onClick={handleOpen}>
-        Add New Stock
-      </Button>
       <ResponsivePopupForm
         open={open}
         handleClose={handleClose}
