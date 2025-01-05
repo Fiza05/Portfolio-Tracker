@@ -22,13 +22,13 @@ const App = () => {
           <ErrorDisplay message={error.message} />
         ) : (
           <>
-            <StockManager
+            <Dashboard
               stocks={stocks}
               addStock={addStock}
               editStock={editStock}
               removeStock={removeStock}
+              symbols={symbols}
             />
-            <Dashboard stocks={stocks} symbols={symbols} />
           </>
         )}
       </Container>
