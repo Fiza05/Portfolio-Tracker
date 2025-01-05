@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 import {
   Box,
   TextField,
@@ -10,25 +10,33 @@ import {
 } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
 
+const initialStockState = {
+  name: "",
+  ticker: "",
+  quantity: 1,
+  buyPrice: 0,
+};
+
+const stockReducer = (state, action) => {
+  switch (action.type) {
+    case "SET_FIELD":
+      return { ...state, [action.field]: action.value };
+    case "RESET":
+      return initialStockState;
+    default:
+      return state;
+  }
+};
+
 const StockManager = ({ stocks, addStock, editStock, removeStock }) => {
-  const [newStock, setNewStock] = useState({
-    name: "",
-    ticker: "",
-    quantity: 1,
-    buyPrice: 0,
-  });
+  const [newStock, dispatch] = useReducer(stockReducer, initialStockState);
   const [editMode, setEditMode] = useState(null);
-  const [editStockData, setEditStockData] = useState({
-    name: "",
-    ticker: "",
-    quantity: 1,
-    buyPrice: 0,
-  });
+  const [editStockData, setEditStockData] = useState(initialStockState);
 
   const handleAdd = () => {
     if (newStock.name && newStock.ticker) {
       addStock(newStock);
-      setNewStock({ name: "", ticker: "", quantity: 1, buyPrice: 0 });
+      dispatch({ type: "RESET" });
     }
   };
 
@@ -40,19 +48,31 @@ const StockManager = ({ stocks, addStock, editStock, removeStock }) => {
   };
 
   return (
-    <Box>
+    <Box mt={4}>
       <Box display="flex" gap={2} mb={2}>
         <TextField
           label="Stock Name"
           variant="outlined"
           value={newStock.name}
-          onChange={(e) => setNewStock({ ...newStock, name: e.target.value })}
+          onChange={(e) =>
+            dispatch({
+              type: "SET_FIELD",
+              field: "name",
+              value: e.target.value,
+            })
+          }
         />
         <TextField
           label="Ticker"
           variant="outlined"
           value={newStock.ticker}
-          onChange={(e) => setNewStock({ ...newStock, ticker: e.target.value })}
+          onChange={(e) =>
+            dispatch({
+              type: "SET_FIELD",
+              field: "ticker",
+              value: e.target.value,
+            })
+          }
         />
         <TextField
           label="Quantity"
@@ -60,7 +80,11 @@ const StockManager = ({ stocks, addStock, editStock, removeStock }) => {
           type="number"
           value={newStock.quantity}
           onChange={(e) =>
-            setNewStock({ ...newStock, quantity: Number(e.target.value) })
+            dispatch({
+              type: "SET_FIELD",
+              field: "quantity",
+              value: Number(e.target.value),
+            })
           }
         />
         <TextField
@@ -69,7 +93,11 @@ const StockManager = ({ stocks, addStock, editStock, removeStock }) => {
           type="number"
           value={newStock.buyPrice}
           onChange={(e) =>
-            setNewStock({ ...newStock, buyPrice: Number(e.target.value) })
+            dispatch({
+              type: "SET_FIELD",
+              field: "buyPrice",
+              value: Number(e.target.value),
+            })
           }
         />
         <Button variant="contained" color="primary" onClick={handleAdd}>
@@ -88,12 +116,7 @@ const StockManager = ({ stocks, addStock, editStock, removeStock }) => {
                   color="primary"
                   onClick={() => {
                     setEditMode(stock.id);
-                    setEditStockData({
-                      name: stock.name,
-                      ticker: stock.ticker,
-                      quantity: stock.quantity,
-                      buyPrice: stock.buyPrice,
-                    });
+                    setEditStockData(stock);
                   }}
                 >
                   <Edit />
