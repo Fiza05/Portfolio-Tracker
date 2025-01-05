@@ -26,13 +26,17 @@ const StockManager = ({ stocks, addStock, editStock, removeStock }) => {
   });
 
   const handleAdd = () => {
-    addStock(newStock);
-    setNewStock({ name: "", ticker: "" });
+    if (newStock.name && newStock.ticker) {
+      addStock(newStock);
+      setNewStock({ name: "", ticker: "", quantity: 1, buyPrice: 0 });
+    }
   };
 
   const handleEdit = (id) => {
-    editStock(id, editStockData);
-    setEditMode(null);
+    if (editStockData.name && editStockData.ticker) {
+      editStock(id, editStockData);
+      setEditMode(null);
+    }
   };
 
   return (
@@ -55,13 +59,8 @@ const StockManager = ({ stocks, addStock, editStock, removeStock }) => {
           variant="outlined"
           type="number"
           value={newStock.quantity}
-          slotProps={{
-            inputLabel: {
-              shrink: true,
-            },
-          }}
           onChange={(e) =>
-            setNewStock({ ...newStock, quantity: e.target.value })
+            setNewStock({ ...newStock, quantity: Number(e.target.value) })
           }
         />
         <TextField
@@ -69,13 +68,8 @@ const StockManager = ({ stocks, addStock, editStock, removeStock }) => {
           variant="outlined"
           type="number"
           value={newStock.buyPrice}
-          slotProps={{
-            inputLabel: {
-              shrink: true,
-            },
-          }}
           onChange={(e) =>
-            setNewStock({ ...newStock, buyPrice: e.target.value })
+            setNewStock({ ...newStock, buyPrice: Number(e.target.value) })
           }
         />
         <Button variant="contained" color="primary" onClick={handleAdd}>
@@ -144,15 +138,10 @@ const StockManager = ({ stocks, addStock, editStock, removeStock }) => {
                   variant="outlined"
                   type="number"
                   value={editStockData.quantity}
-                  slotProps={{
-                    inputLabel: {
-                      shrink: true,
-                    },
-                  }}
                   onChange={(e) =>
                     setEditStockData({
                       ...editStockData,
-                      quantity: e.target.value,
+                      quantity: Number(e.target.value),
                     })
                   }
                   size="small"
@@ -163,15 +152,10 @@ const StockManager = ({ stocks, addStock, editStock, removeStock }) => {
                   variant="outlined"
                   type="number"
                   value={editStockData.buyPrice}
-                  slotProps={{
-                    inputLabel: {
-                      shrink: true,
-                    },
-                  }}
                   onChange={(e) =>
                     setEditStockData({
                       ...editStockData,
-                      buyPrice: e.target.value,
+                      buyPrice: Number(e.target.value),
                     })
                   }
                   size="small"
@@ -187,8 +171,7 @@ const StockManager = ({ stocks, addStock, editStock, removeStock }) => {
               </>
             ) : (
               <ListItemText
-                primary={`${stock.name} (${stock.ticker}) ${stock.quantity} ${stock.buyPrice}`}
-                primaryTypographyProps={{ fontWeight: "bold" }}
+                primary={`${stock.name} (${stock.ticker}) - Quantity: ${stock.quantity}, Buy Price: ${stock.buyPrice}`}
               />
             )}
           </ListItem>

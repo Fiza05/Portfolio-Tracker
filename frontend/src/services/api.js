@@ -1,9 +1,5 @@
 import axios from "axios";
-import {
-  REALTIME_STOCK_PRICE_API_BASE_URL,
-  API_KEY,
-  API_BASE_URL,
-} from "../utils/constants";
+import { REALTIME_STOCK_PRICE_API_BASE_URL, API_KEY } from "../utils/constants";
 
 export const fetchStockDetails = async (symbol) => {
   try {
