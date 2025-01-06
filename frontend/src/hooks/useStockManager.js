@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { toast } from "react-toastify";
 
 import {
@@ -18,8 +18,9 @@ const useStockManager = () => {
     }
   };
 
-  const fetchStocks = async () => {
+  const fetchStocks = useCallback(async () => {
     try {
+      setLoading(true);
       const data = await getStocks();
       setStocks(data);
     } catch (err) {
@@ -27,7 +28,7 @@ const useStockManager = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []); // No dependencies here
 
   const addStock = async (stock) => {
     try {
@@ -71,8 +72,8 @@ const useStockManager = () => {
   };
 
   useEffect(() => {
-    fetchStocks();
-  }, []);
+    fetchStocks(); // Now safe to call fetchStocks
+  }, [fetchStocks]); // Dependency added
 
   return { stocks, loading, addStock, editStock, removeStock };
 };
