@@ -3,10 +3,11 @@ import { Container, CssBaseline } from "@mui/material";
 import useStockManager from "./hooks/useStockManager";
 import Dashboard from "./components/Dashboard";
 import LoadingSpinner from "./components/LoadingSpinner";
-import ErrorDisplay from "./components/ErrorDisplay";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
-  const { stocks, loading, error, addStock, editStock, removeStock } =
+  const { stocks, loading, addStock, editStock, removeStock } =
     useStockManager();
 
   const symbols = useMemo(() => stocks.map((stock) => stock.ticker), [stocks]);
@@ -17,8 +18,6 @@ const App = () => {
       <Container>
         {loading ? (
           <LoadingSpinner />
-        ) : error ? (
-          <ErrorDisplay message={error.message} />
         ) : (
           <>
             <Dashboard
@@ -31,6 +30,7 @@ const App = () => {
           </>
         )}
       </Container>
+      <ToastContainer />
     </>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Typography, CircularProgress, Button } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import StockCard from "./StockCard";
 import ErrorDisplay from "./ErrorDisplay";
@@ -7,7 +7,7 @@ import useFetchStocks from "../hooks/useFetchStocks";
 import ResponsivePopupForm from "./ResponsivePopupForm";
 
 const Dashboard = ({ stocks, addStock, editStock, removeStock, symbols }) => {
-  const { stockData, loading, error } = useFetchStocks(symbols);
+  const { stockData, error } = useFetchStocks(symbols);
 
   const [open, setOpen] = useState(false);
   const [editingStock, setEditingStock] = useState(null);
@@ -49,8 +49,6 @@ const Dashboard = ({ stocks, addStock, editStock, removeStock, symbols }) => {
       <Typography variant="h3" align="center" gutterBottom>
         Portfolio Tracker
       </Typography>
-
-      {loading && <CircularProgress />}
 
       {error && (
         <ErrorDisplay message={`Error fetching stock data: ${error.message}`} />

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 import { fetchStockDetails } from "../services/api";
 
 const useFetchStocks = (symbols) => {
@@ -19,6 +20,9 @@ const useFetchStocks = (symbols) => {
           return acc;
         }, {});
         setStockData(formattedData);
+        if (Object.values(formattedData).some((value) => value === undefined)) {
+          toast.error("Alpha Vantage API rate limit reached");
+        }
       } catch (err) {
         setError(err);
       } finally {
